@@ -1,0 +1,11 @@
+{
+  "liveServer.settings.ignoreFiles": [
+    "**/*.db*",
+    "**/*.db-shm",
+    "**/*.db-wal",
+    ".vscode/**",
+    "node_modules/**",
+    "obj/**",
+    "bin/**"
+  ]
+}

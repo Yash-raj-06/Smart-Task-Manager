@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Exclude SQLite database files from triggering dotnet watch reloads -->
+    <Watch Remove="*.db" />
+    <Watch Remove="*.db-shm" />
+    <Watch Remove="*.db-wal" />
+    <Watch Remove="tasks.db" />
+    <Watch Remove="tasks.db-shm" />
+    <Watch Remove="tasks.db-wal" />
+    <Watch Remove="**/*.db" />
+    <Watch Remove="**/*.db-shm" />
+    <Watch Remove="**/*.db-wal" />
+  </ItemGroup>
+
+</Project>
