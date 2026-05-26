@@ -1426,6 +1426,292 @@ body.dark .flatpickr-time .flatpickr-am-pm {
     color: var(--color-on-surface) !important;
 }
 
+/* ==========================================================================
+   Taskify State-of-the-Art Responsive Media Queries & Breakpoints
+   ========================================================================== */
+
+@media (max-width: 992px) {
+    /* 1. Header & Navigation Drawer Toggles */
+    .app-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1.5rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
+        position: sticky;
+        top: 0;
+        z-index: 900;
+        height: 64px;
+        box-shadow: var(--glass-shadow);
+    }
+
+    .mobile-menu-trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-on-surface);
+        background: var(--color-surface-container-low);
+        border: 1px solid var(--color-outline);
+        border-radius: 0.65rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .mobile-menu-trigger:hover {
+        background-color: var(--color-surface-container-high);
+        color: var(--color-primary);
+    }
+
+    /* 2. Sidebar Navigation Overlay */
+    .sidebar-panel {
+        transform: translateX(-100%);
+        box-shadow: none;
+        z-index: 1050;
+        width: var(--sidebar-width);
+        height: 100vh;
+        position: fixed;
+    }
+
+    .sidebar-panel.show {
+        transform: translateX(0);
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.4);
+    }
+
+    /* 3. Main Viewport Adjustments */
+    .app-viewport {
+        margin-left: 0;
+        padding: 1.25rem 1.5rem;
+        min-height: calc(100vh - 64px);
+    }
+
+    /* 4. Bento Grid Adaptation */
+    .bento-meta-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* 1. Viewport Inner Spacing */
+    .app-viewport {
+        padding: 1rem;
+    }
+
+    .h2 {
+        font-size: 1.5rem !important;
+    }
+
+    /* 2. State-of-the-Art Table to Card Transformation */
+    .table-responsive {
+        border: none !important;
+        overflow: visible !important;
+    }
+
+    /* Transform HTML table structures into responsive CSS Grid Cards */
+    #task-table-body, 
+    #task-table-body tr, 
+    #task-table-body td {
+        display: block;
+        width: 100%;
+    }
+
+    /* Hide standard desktop table header row */
+    .table-responsive thead {
+        display: none !important;
+    }
+
+    #task-table-body tr {
+        background: var(--glass-bg) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 1.25rem !important;
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #task-table-body tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    #task-table-body td {
+        border: none !important;
+        padding: 0.35rem 0 !important;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    /* Column adjustments for Card rendering */
+    #task-table-body td:nth-child(1) {
+        /* Checkbox wrapper */
+        position: absolute;
+        left: 1.25rem;
+        top: 1.25rem;
+        width: auto;
+        padding: 0 !important;
+        z-index: 5;
+    }
+
+    #task-table-body td:nth-child(2) {
+        /* Title and description block */
+        display: block;
+        padding-top: 0 !important;
+        padding-left: 2.25rem !important; /* Space for the floating absolute checkbox! */
+        padding-right: 6.5rem !important; /* Space for the floating absolute action buttons! */
+        margin-bottom: 0.75rem;
+    }
+
+    #task-table-body td:nth-child(2) .text-wrap {
+        font-size: 1.05rem !important;
+        line-height: 1.3;
+    }
+
+    #task-table-body td:nth-child(2) .text-truncate {
+        max-width: 100% !important;
+        white-space: normal !important;
+        margin-top: 0.35rem !important;
+        font-size: 0.85rem !important;
+        color: var(--color-on-surface-variant) !important;
+        opacity: 0.85;
+    }
+
+    #task-table-body td:nth-child(3) {
+        /* Project Pill */
+        padding-left: 2.25rem !important;
+        margin-bottom: 0.35rem;
+        width: auto;
+        display: inline-flex;
+    }
+
+    #task-table-body td:nth-child(4) {
+        /* Priority Badge */
+        padding-left: 2.25rem !important;
+        margin-bottom: 0.5rem;
+        width: auto;
+        display: inline-flex;
+    }
+
+    #task-table-body td:nth-child(5) {
+        /* Due Date & Time indicator */
+        padding-left: 2.25rem !important;
+        font-size: 0.825rem;
+        color: var(--color-on-surface-variant);
+        margin-bottom: 0.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    #task-table-body td:nth-child(5) > div {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    #task-table-body td:nth-child(6) {
+        /* Action buttons panel absolutely positioned in top-right! */
+        position: absolute;
+        right: 1.25rem;
+        top: 1rem;
+        width: auto;
+        padding: 0 !important;
+        z-index: 5;
+    }
+
+    #task-table-body td:nth-child(6) .d-inline-flex {
+        gap: 0.35rem !important;
+    }
+
+    /* 3. Modal adjustments */
+    .modal-dialog {
+        margin: 0.5rem auto !important;
+        max-width: 95% !important;
+    }
+
+    .glass-modal-content {
+        border-radius: 1.25rem !important;
+        padding: 0.5rem !important;
+    }
+
+    .bento-meta-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+    }
+
+    /* 4. Dashboard headers vertical flow stacking */
+    .row.align-items-end {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem;
+    }
+
+    .row.align-items-end .col {
+        width: 100%;
+    }
+
+    .row.align-items-end .col-auto {
+        width: 100%;
+    }
+
+    .row.align-items-end .col-auto .btn {
+        width: 100% !important;
+        justify-content: center;
+    }
+
+    /* Central control / search filters flow */
+    .d-flex.align-items-center.gap-3.flex-wrap {
+        width: 100% !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    .d-flex.align-items-center.gap-3.flex-wrap > * {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 576px) {
+    /* 1. Typography adaptation */
+    .h2 {
+        font-size: 1.35rem !important;
+    }
+
+    /* 2. Toast container fitting */
+    .toast-container {
+        width: 100% !important;
+        padding: 0.75rem !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    .toast {
+        width: 100% !important;
+    }
+
+    /* 3. Detail dialog controls flow */
+    .modal-footer {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+    }
+
+    .modal-footer button {
+        width: 100% !important;
+        justify-content: center;
+    }
+}
+
 
 
 
