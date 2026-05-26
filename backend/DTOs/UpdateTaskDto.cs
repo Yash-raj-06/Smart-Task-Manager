@@ -17,7 +17,7 @@ namespace backend.DTOs
         public string Project { get; set; } = "General";
 
         [Required(ErrorMessage = "Priority is required.")]
-        [RegularExpression("^(low|medium|high)$", ErrorMessage = "Priority must be 'low', 'medium', or 'high'.")]
+        [RegularExpression("^(low|medium|high|Low|Medium|High|LOW|MEDIUM|HIGH)$", ErrorMessage = "Priority must be 'low', 'medium', or 'high'.")]
         public string Priority { get; set; } = "medium";
 
         [Required(ErrorMessage = "Due Date is required.")]

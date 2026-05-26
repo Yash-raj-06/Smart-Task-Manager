@@ -1,0 +1,79 @@
+<section id="dashboard-section" class="fade-in-section">
+    <!-- Header -->
+    <div class="row align-items-end mb-4 border-bottom border-outline-variant pb-3">
+        <div class="col">
+            <span class="text-primary fw-bold text-uppercase fs-7 font-mono">Overview</span>
+            <h2 class="h2 m-0 mt-1 fw-bold">My Workspace</h2>
+        </div>
+    </div>
+
+    <!-- Bento Metrics Grid -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
+            <div class="glass-panel metric-card border border-outline-variant">
+                <div class="metric-icon-box bg-primary-subtle text-primary">
+                    <span class="material-symbols-outlined">pending_actions</span>
+                </div>
+                <div>
+                    <h3 class="metric-title">Pending</h3>
+                    <p class="metric-value text-primary" id="metric-pending-count">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="glass-panel metric-card border border-outline-variant">
+                <div class="metric-icon-box bg-success-subtle text-success">
+                    <span class="material-symbols-outlined">check_circle</span>
+                </div>
+                <div>
+                    <h3 class="metric-title">Completed</h3>
+                    <p class="metric-value text-success" id="metric-completed-count">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="glass-panel metric-card border border-outline-variant">
+                <div class="metric-icon-box bg-danger-subtle text-danger">
+                    <span class="material-symbols-outlined">error</span>
+                </div>
+                <div>
+                    <h3 class="metric-title">Overdue</h3>
+                    <p class="metric-value text-danger" id="metric-overdue-count">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bento Grid Tasks Row -->
+    <div class="row g-4">
+        <!-- Today's Schedule -->
+        <div class="col-12 col-xl-6">
+            <div class="glass-panel p-4 h-100 border border-outline-variant">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-outline pb-2">
+                    <h3 class="h5 m-0 fw-bold d-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">today</span>
+                        Today's Schedule
+                    </h3>
+                </div>
+                <div class="d-flex flex-column gap-2" id="today-schedule-list">
+                    <!-- Dynamic Today's Tasks Feed -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Overdue Alerts -->
+        <div class="col-12 col-xl-6">
+            <div class="glass-panel p-4 h-100 border border-outline-variant">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-outline pb-2">
+                    <h3 class="h5 m-0 fw-bold d-flex align-items-center gap-2 text-danger">
+                        <span class="material-symbols-outlined">warning</span>
+                        Overdue Alerts
+                    </h3>
+                </div>
+                <div class="d-flex flex-column gap-2" id="overdue-items-list">
+                    <!-- Dynamic Overdue Feed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

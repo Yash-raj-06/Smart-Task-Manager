@@ -117,6 +117,16 @@ namespace backend.Services
                 return null;
             }
 
+            // Helper to normalize null and empty strings for safe comparison
+            string NormalizeString(string? str) => str?.Trim() ?? string.Empty;
+
+            // Check if the only thing changing is the completion status (pure toggle)
+            bool isOnlyTogglingCompletion = 
+                NormalizeString(existing.Title) == NormalizeString(updateTaskDto.Title) &&
+                NormalizeString(existing.Description) == NormalizeString(updateTaskDto.Description) &&
+                NormalizeString(existing.Project) == NormalizeString(updateTaskDto.Project) &&
+                NormalizeString(existing.Priority) == NormalizeString(updateTaskDto.Priority).ToLower();
+
             // Determine if the due date/time is actually being changed
             var parsedProposedDate = ParseAndNormalizeDueDate(updateTaskDto.DueDate, updateTaskDto.DueTime, validateFuture: false);
             
@@ -130,13 +140,11 @@ namespace backend.Services
                        dt1.Minute == dt2.Minute;
             }
 
-            // Only validate if the proposed date/time is different from the existing date/time
-            bool shouldValidate = !DateTimesAreEqualUpToMinute(parsedProposedDate, existing.DueDate);
+            // Only validate if the proposed date/time is different from the existing date/time,
+            // AND we are NOT simply toggling the completion status.
+            bool shouldValidate = !isOnlyTogglingCompletion && !DateTimesAreEqualUpToMinute(parsedProposedDate, existing.DueDate);
 
             var finalDueDate = ParseAndNormalizeDueDate(updateTaskDto.DueDate, updateTaskDto.DueTime, validateFuture: shouldValidate);
-
-            // Helper to normalize null and empty strings for safe comparison
-            string NormalizeString(string? str) => str?.Trim() ?? string.Empty;
 
             // Detect if there are changes
             bool hasChanges = NormalizeString(existing.Title) != NormalizeString(updateTaskDto.Title) ||

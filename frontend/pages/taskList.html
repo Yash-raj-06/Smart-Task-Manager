@@ -1,0 +1,68 @@
+<section id="task-list-section" class="fade-in-section">
+    <!-- Header -->
+    <div class="row align-items-end mb-4 border-bottom border-outline-variant pb-3">
+        <div class="col">
+            <span class="text-primary fw-bold text-uppercase fs-7 font-mono">Workspace</span>
+            <h2 class="h2 m-0 mt-1 fw-bold">All Tasks</h2>
+        </div>
+    </div>
+
+    <!-- Filters & Search Toolbar -->
+    <div class="glass-panel p-3 mb-4 border border-outline-variant">
+        <div class="row g-2 align-items-center">
+            <!-- Search Field -->
+            <div class="col-12 col-md-4">
+                <div class="d-flex align-items-center gap-2 px-3 py-2 border border-outline-variant rounded-pill glass-input" style="max-width: 360px;">
+                    <span class="material-symbols-outlined text-muted" style="font-size: 1.15rem;">search</span>
+                    <input type="text" id="search-input" class="bg-transparent border-0 w-100" placeholder="Search task title or description..." style="outline: none; font-size: 0.9rem; color: var(--color-on-surface);">
+                </div>
+            </div>
+            
+            <!-- Priority Filter -->
+            <div class="col-6 col-md-2">
+                <select id="filter-priority" class="form-select border-outline-variant rounded-pill glass-input" style="cursor: pointer; max-width: 180px;">
+                    <option value="all">All Priorities</option>
+                    <option value="high">High Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="low">Low Priority</option>
+                </select>
+            </div>
+
+            <!-- Status Filter -->
+            <div class="col-6 col-md-2">
+                <select id="filter-status" class="form-select border-outline-variant rounded-pill glass-input" style="cursor: pointer; max-width: 180px;">
+                    <option value="all">All Statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                    <option value="overdue">Overdue</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tasks Responsive Table Container -->
+    <div class="glass-panel border border-outline-variant mb-1 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">Check</th>
+                        <th>Task Title</th>
+                        <th>Project</th>
+                        <th>Priority</th>
+                        <th>Due Date</th>
+                        <th style="width: 140px; text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="task-table-body">
+                    <!-- Dynamic rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination Toolbar -->
+    <div class="d-flex justify-content-center" id="pagination-nav">
+        <!-- Centered paginated list links loaded dynamically -->
+    </div>
+</section>

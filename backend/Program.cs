@@ -22,6 +22,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
+    {
+        Title = "Taskify Smart Task Manager API",
+        Version = "v1",
+        Description = "Production-style RESTful API endpoints for the Taskify dashboard.",
+        Contact = new Microsoft.OpenApi.OpenApiContact
+        {
+            Name = "Taskify Support",
+            Email = "support@taskify.com"
+        }
+    });
+});
+
 // Enable CORS for frontend client port communication
 builder.Services.AddCors(options =>
 {
@@ -40,6 +56,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Taskify API v1");
+    c.RoutePrefix = "swagger"; // Access Swagger UI at http://localhost:5241/swagger
+});
 
 app.UseCors("AllowFrontend");
 

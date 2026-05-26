@@ -58,8 +58,12 @@ class App {
         // Initialize Event Delegation
         this.initEventDelegation();
 
-        // Load default section (Dashboard)
-        await this.navigate('dashboard');
+        // Set up hash change routing listener
+        window.addEventListener('hashchange', () => this.handleHashChange());
+
+        // Load default section from URL hash or default to dashboard
+        const initialSection = window.location.hash.replace('#', '') || 'dashboard';
+        await this.navigate(initialSection);
     }
 
 
@@ -161,39 +165,6 @@ class App {
                     !sidebar.contains(e.target) && 
                     !menuTrigger.contains(e.target)) {
                     sidebar.classList.remove('show');
-                }
-            });
-        }
-
-        // Active Tasks Filter Dropdowns
-        const priorityFilterEl = document.getElementById('filter-priority');
-        const statusFilterEl = document.getElementById('filter-status');
-        const searchInput = document.getElementById('search-input');
-
-        if (priorityFilterEl) {
-            priorityFilterEl.addEventListener('change', async (e) => {
-                this.state.priorityFilter = e.target.value;
-                this.state.currentPage = 1;
-                await this.refreshTaskList();
-            });
-        }
-
-        if (statusFilterEl) {
-            statusFilterEl.addEventListener('change', async (e) => {
-                this.state.statusFilter = e.target.value;
-                this.state.currentPage = 1;
-                await this.refreshTaskList();
-            });
-        }
-
-        if (searchInput) {
-            // Only trigger search when the user presses the 'Enter' key
-            searchInput.addEventListener('keydown', async (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    this.state.searchQuery = e.target.value.trim();
-                    this.state.currentPage = 1;
-                    await this.refreshTaskList();
                 }
             });
         }
@@ -322,7 +293,7 @@ class App {
                             title: original.title,
                             description: original.description,
                             project: original.project,
-                            priority: original.priority,
+                            priority: original.priority ? original.priority.toLowerCase() : 'medium',
                             dueDate: original.dueDate,
                             dueTime: extractedTime,
                             isCompleted: isCompleted
@@ -394,6 +365,27 @@ class App {
                 );
             },
 
+            // Keyboard Search submission
+            onSearch: async (query) => {
+                this.state.searchQuery = query;
+                this.state.currentPage = 1;
+                await this.refreshTaskList();
+            },
+
+            // Priority dropdown filter change
+            onFilterPriority: async (priority) => {
+                this.state.priorityFilter = priority;
+                this.state.currentPage = 1;
+                await this.refreshTaskList();
+            },
+
+            // Status dropdown filter change
+            onFilterStatus: async (status) => {
+                this.state.statusFilter = status;
+                this.state.currentPage = 1;
+                await this.refreshTaskList();
+            },
+
             // Change table page
             onPageChange: async (page) => {
                 this.state.currentPage = page;
@@ -439,9 +431,21 @@ class App {
 
     /**
      * SPA Section Switch Router.
-     * Activates appropriate pages, adds navbar active highlighting, and fetches dynamic data inputs.
+     * Updates URL hash to trigger unified routing workflow.
      */
     async navigate(sectionKey) {
+        if (window.location.hash !== `#${sectionKey}`) {
+            window.location.hash = sectionKey;
+        } else {
+            await this.handleHashChange();
+        }
+    }
+
+    /**
+     * Asynchronously loads page HTML partial templates and refreshes the data view.
+     */
+    async handleHashChange() {
+        const sectionKey = window.location.hash.replace('#', '') || 'dashboard';
         this.state.activeSection = sectionKey;
 
         // Toggle Sidebar Nav highlighters
@@ -457,20 +461,42 @@ class App {
         // Mobile menu cleanup on toggle clicks
         document.getElementById('sidebar')?.classList.remove('show');
 
-        // Toggle page elements visibility using d-none Bootstrap class
-        const sections = ['dashboard', 'task-list', 'trash'];
-        sections.forEach(key => {
-            const el = document.getElementById(`${key}-section`);
-            if (el) {
-                if (key === sectionKey) {
-                    el.classList.remove('d-none');
-                    el.classList.add('fade-in-section');
-                } else {
-                    el.classList.add('d-none');
-                    el.classList.remove('fade-in-section');
+        // Dynamic file maps
+        const sectionPageMap = {
+            'dashboard': 'pages/dashboard.html',
+            'task-list': 'pages/taskList.html',
+            'trash': 'pages/trash.html'
+        };
+
+        const pagePath = sectionPageMap[sectionKey] || 'pages/dashboard.html';
+
+        try {
+            const response = await fetch(pagePath);
+            if (!response.ok) {
+                throw new Error(`Failed to load page: ${response.statusText}`);
+            }
+            const html = await response.text();
+            
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) {
+                mainContent.innerHTML = html;
+
+                // Sync UI filters state if loading the active task-list view
+                if (sectionKey === 'task-list') {
+                    const searchInput = document.getElementById('search-input');
+                    if (searchInput) searchInput.value = this.state.searchQuery;
+
+                    const priorityFilter = document.getElementById('filter-priority');
+                    if (priorityFilter) priorityFilter.value = this.state.priorityFilter;
+
+                    const statusFilter = document.getElementById('filter-status');
+                    if (statusFilter) statusFilter.value = this.state.statusFilter;
                 }
             }
-        });
+        } catch (error) {
+            console.error('SPA dynamic loader error:', error);
+            taskUI.showToast('Failed to load page content.', 'error');
+        }
 
         // Trigger dynamic view loader routines
         await this.refreshActiveView();
