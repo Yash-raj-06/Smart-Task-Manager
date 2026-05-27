@@ -226,17 +226,21 @@ class App {
         }
 
         // Bind real-time input event listeners for instant validation styling
-        const validationFields = ['title', 'desc', 'project', 'priority', 'due-time'];
+        const validationFields = ['title', 'desc', 'project', 'priority', 'due-date', 'due-time'];
         validationFields.forEach(f => {
             const input = document.getElementById(`form-${f}`);
             if (input) {
-                const eventName = input.tagName === 'SELECT' || f === 'due-time' ? 'change' : 'input';
+                const eventName = input.tagName === 'SELECT' || f === 'due-date' || f === 'due-time' ? 'change' : 'input';
                 input.addEventListener(eventName, () => {
-                    const valKey = f === 'desc' ? 'description' : (f === 'due-time' ? 'dueTime' : f);
+                    const valKey = f === 'desc' ? 'description' : 
+                                   (f === 'due-date' ? 'dueDate' : 
+                                   (f === 'due-time' ? 'dueTime' : f));
                     this.triggerRealTimeFieldValidation(valKey);
                 });
                 input.addEventListener('blur', () => {
-                    const valKey = f === 'desc' ? 'description' : (f === 'due-time' ? 'dueTime' : f);
+                    const valKey = f === 'desc' ? 'description' : 
+                                   (f === 'due-date' ? 'dueDate' : 
+                                   (f === 'due-time' ? 'dueTime' : f));
                     this.triggerRealTimeFieldValidation(valKey);
                 });
             }
@@ -641,7 +645,9 @@ class App {
             // Apply validation styles for all fields
             const allFields = ['title', 'description', 'project', 'priority', 'dueDate', 'dueTime'];
             allFields.forEach(field => {
-                const elKey = field === 'description' ? 'desc' : field;
+                const elKey = field === 'description' ? 'desc' : 
+                              (field === 'dueDate' ? 'due-date' : 
+                              (field === 'dueTime' ? 'due-time' : field));
                 const inputEl = document.getElementById(`form-${elKey}`);
                 const errorMsg = validation.errors[field];
                 if (errorMsg) {
@@ -774,8 +780,10 @@ class App {
 
         const validation = taskValidation.validateTask(formData);
         
-        // Map elements appropriately
-        const elKey = fieldName === 'description' ? 'desc' : fieldName;
+        // Map elements appropriately back to their hyphenated DOM IDs
+        const elKey = fieldName === 'description' ? 'desc' : 
+                      (fieldName === 'dueDate' ? 'due-date' : 
+                      (fieldName === 'dueTime' ? 'due-time' : fieldName));
         const inputEl = document.getElementById(`form-${elKey}`);
         if (!inputEl) return;
 

@@ -24,7 +24,7 @@ namespace backend.Controllers
             [FromQuery] string? priority,
             [FromQuery] string? status,
             [FromQuery] int skip = 0,
-            [FromQuery] int take = 5)
+            [FromQuery] int take = 4)
         {
             try
             {
