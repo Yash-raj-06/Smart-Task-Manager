@@ -75,6 +75,7 @@ class App {
             dateFormat: "Y-m-d",
             minDate: "today",
             disableMobile: true,
+            position: "above",
             onChange: (selectedDates) => {
                 this.triggerRealTimeFieldValidation("dueDate");
                 this.updateTimePickerConstraints(selectedDates[0]);
@@ -645,9 +646,7 @@ class App {
             // Apply validation styles for all fields
             const allFields = ['title', 'description', 'project', 'priority', 'dueDate', 'dueTime'];
             allFields.forEach(field => {
-                const elKey = field === 'description' ? 'desc' : 
-                              (field === 'dueDate' ? 'due-date' : 
-                              (field === 'dueTime' ? 'due-time' : field));
+                const elKey = field === 'description' ? 'desc' : field;
                 const inputEl = document.getElementById(`form-${elKey}`);
                 const errorMsg = validation.errors[field];
                 if (errorMsg) {
@@ -780,10 +779,36 @@ class App {
 
         const validation = taskValidation.validateTask(formData);
         
-        // Map elements appropriately back to their hyphenated DOM IDs
-        const elKey = fieldName === 'description' ? 'desc' : 
-                      (fieldName === 'dueDate' ? 'due-date' : 
-                      (fieldName === 'dueTime' ? 'due-time' : fieldName));
+        // Dynamic cross-validation: Date and Time validation states are strictly linked
+        if (fieldName === 'dueDate' || fieldName === 'dueTime') {
+            const dateEl = document.getElementById('form-due-date');
+            const timeEl = document.getElementById('form-due-time');
+            if (dateEl) {
+                const dateError = validation.errors['dueDate'];
+                if (dateError) {
+                    taskUI.setFieldState(dateEl, false, dateError);
+                } else {
+                    taskUI.setFieldState(dateEl, true);
+                }
+            }
+            if (timeEl) {
+                const timeError = validation.errors['dueTime'];
+                if (timeError) {
+                    taskUI.setFieldState(timeEl, false, timeError);
+                } else {
+                    const value = formData['dueTime'];
+                    if (value && value.trim().length > 0) {
+                        taskUI.setFieldState(timeEl, true);
+                    } else {
+                        taskUI.setFieldState(timeEl, null);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Map other elements appropriately
+        const elKey = fieldName === 'description' ? 'desc' : fieldName;
         const inputEl = document.getElementById(`form-${elKey}`);
         if (!inputEl) return;
 

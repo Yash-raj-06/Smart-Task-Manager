@@ -1713,5 +1713,171 @@ body.dark .flatpickr-time .flatpickr-am-pm {
 }
 
 
+/* =========================================================
+   Flatpickr Calendar Styling & High-Contrast Custom Themes
+   ========================================================= */
+.flatpickr-calendar {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-outline-variant) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    border-radius: 16px !important;
+    font-family: var(--font-body) !important;
+    box-sizing: content-box !important;
+}
+
+.flatpickr-days,
+.dayContainer,
+.flatpickr-weekdayContainer {
+    box-sizing: content-box !important;
+}
+
+/* Month and header styling */
+.flatpickr-months, 
+.flatpickr-month {
+    background: transparent !important;
+    color: var(--color-on-surface) !important;
+}
+
+.flatpickr-current-month, 
+.flatpickr-current-month .numInputWrapper, 
+.flatpickr-current-month input.cur-year {
+    color: var(--color-on-surface) !important;
+    font-weight: 700 !important;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-calendar .flatpickr-months .flatpickr-next-month svg {
+    fill: var(--color-on-surface) !important;
+}
+
+/* Weekdays labels */
+span.flatpickr-weekday {
+    color: var(--color-secondary) !important;
+    font-weight: 600 !important;
+    font-family: var(--font-title) !important;
+}
+
+/* Day Numbers styling - Guarantee absolute high contrast readability */
+.flatpickr-day,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay,
+.flatpickr-day.today,
+.flatpickr-day.flatpickr-disabled {
+    color: #191c1e !important; /* Bold, highly visible text on light background */
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    transition: all 0.15s ease !important;
+}
+
+/* Day Hover state */
+.flatpickr-day:hover, 
+.flatpickr-day:focus {
+    background: var(--color-surface-container-high) !important;
+    color: #191c1e !important;
+}
+
+/* Today state highlight */
+.flatpickr-day.today {
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    font-weight: 700 !important;
+}
+.flatpickr-day.today:hover {
+    background: var(--color-surface-container-high) !important;
+    color: var(--color-primary) !important;
+}
+
+/* Selected state highlight */
+.flatpickr-day.selected, 
+.flatpickr-day.selected:focus, 
+.flatpickr-day.selected:hover {
+    background: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.25) !important;
+}
+
+/* Prev and Next month days in light mode - Distinct grey */
+.flatpickr-day.prevMonthDay, 
+.flatpickr-day.nextMonthDay {
+    color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Disabled past days in light mode - Legible but distinct */
+.flatpickr-day.flatpickr-disabled, 
+.flatpickr-day.flatpickr-disabled:hover {
+    color: rgba(0, 0, 0, 0.22) !important;
+    background: transparent !important;
+    cursor: not-allowed !important;
+}
+
+/* ---------------------------------------------------------
+   Dark Mode Specific Overrides - Bulletproof Contrast
+   --------------------------------------------------------- */
+body.dark .flatpickr-calendar {
+    background: #15181e !important; /* Match dark theme card background */
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: var(--glass-shadow) !important;
+}
+
+/* Active future days in dark mode */
+body.dark .flatpickr-day {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+body.dark .flatpickr-current-month,
+body.dark .flatpickr-current-month .numInputWrapper,
+body.dark .flatpickr-current-month input.cur-year {
+    color: #ffffff !important;
+}
+
+body.dark .flatpickr-calendar .flatpickr-months .flatpickr-prev-month svg,
+body.dark .flatpickr-calendar .flatpickr-months .flatpickr-next-month svg {
+    fill: #ffffff !important;
+}
+
+body.dark span.flatpickr-weekday {
+    color: var(--color-secondary) !important;
+}
+
+body.dark .flatpickr-day:hover, 
+body.dark .flatpickr-day:focus {
+    background: var(--color-surface-container-high) !important;
+    color: #ffffff !important;
+}
+
+/* Today date highlighted in dark mode */
+body.dark .flatpickr-day.today {
+    border-color: #b2c5ff !important;
+    color: #b2c5ff !important;
+}
+
+/* Selected date highlighted in dark mode */
+body.dark .flatpickr-day.selected, 
+body.dark .flatpickr-day.selected:focus, 
+body.dark .flatpickr-day.selected:hover {
+    background: #b2c5ff !important;
+    border-color: #b2c5ff !important;
+    color: #001848 !important; /* Dark navy text on bright blue background */
+    font-weight: 700 !important;
+}
+
+/* Prev/Next month days in dark mode - Legible light grey */
+body.dark .flatpickr-day.prevMonthDay, 
+body.dark .flatpickr-day.nextMonthDay {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Disabled past days in dark mode - Muted but perfectly legible grey */
+body.dark .flatpickr-day.flatpickr-disabled, 
+body.dark .flatpickr-day.flatpickr-disabled:hover {
+    color: rgba(255, 255, 255, 0.25) !important;
+    background: transparent !important;
+    cursor: not-allowed !important;
+}
+
+
 
 
